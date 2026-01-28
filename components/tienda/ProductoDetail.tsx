@@ -2,7 +2,7 @@ import { Colors } from "@/constants/Colors";
 import { useComprarProducto } from "@/hooks/tienda/useComprarProducto";
 import { Producto } from "@/store/auth/tienda_types";
 import { withOpacity } from "@/utils/getColorByHex";
-import { FontAwesome, FontAwesome6 } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { useCallback, useEffect } from "react";
 import {
@@ -14,6 +14,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import CurrencyBadge from "../ui/CurrencyBadge";
 
 interface ProductoDetailProps {
   producto: Producto | null;
@@ -78,28 +79,8 @@ export const ProductoDetail = ({
           <Text style={styles.description}>{producto.tipo.nombre}</Text>
 
           <View style={styles.costContainer}>
-            <View
-              style={[
-                styles.costItem,
-                { backgroundColor: withOpacity(Colors.yellowDC, 0.1) },
-              ]}
-            >
-              <FontAwesome6 name="coins" size={20} color={Colors.yellowDC} />
-              <Text style={styles.costText}>{producto.monedas}</Text>
-            </View>
-            <View
-              style={[
-                styles.costItem,
-                { backgroundColor: withOpacity(Colors.blueBoldDC, 0.1) },
-              ]}
-            >
-              <FontAwesome6
-                name="diamond"
-                size={20}
-                color={Colors.blueBoldDC}
-              />
-              <Text style={styles.costText}>{producto.diamantes}</Text>
-            </View>
+            <CurrencyBadge icon="coins" amount={producto.monedas} color="#EDAF00" size={20}/>
+            <CurrencyBadge icon="gem" amount={producto.diamantes} color="#53EAFD" size={20} />
           </View>
 
           <TouchableOpacity
@@ -146,6 +127,12 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 15,
     right: 15,
+    borderRadius: 99999,
+    backgroundColor: withOpacity("#FF0000", 0.4),
+    width: 36,
+    height: 36,
+    justifyContent: "center",
+    alignItems: "center",
   },
   image: {
     width: 200,

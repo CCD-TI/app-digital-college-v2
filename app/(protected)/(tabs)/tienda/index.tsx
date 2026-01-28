@@ -1,20 +1,18 @@
+import CurrencyBadge from "@/components/ui/CurrencyBadge";
 import { Colors } from "@/constants/Colors";
 import { styles } from "@/constants/Styles";
 import { useAuthStore } from "@/store/auth/authStore";
 import { Producto } from "@/store/auth/tienda_types";
-import { withOpacity } from "@/utils/getColorByHex";
-import { FontAwesome6 } from "@expo/vector-icons";
 import { useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
   StyleSheet,
-  Text,
-  View,
+  View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Filter from "../../../../components/Filter";
-import ProductoCard from "../../../../components/ProductoCard";
+import ProductoCard from "../../../../components/tienda/ProductoCard";
 import { ProductoDetail } from "../../../../components/tienda/ProductoDetail";
 import { useProductos } from "../../../../hooks/useProductos";
 
@@ -104,14 +102,8 @@ export default function TiendaScreen() {
       <View style={localStyles.header}>
         {economia && (
           <View style={localStyles.balanceContainer}>
-            <View style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 5, borderRadius: 5, backgroundColor: withOpacity('#EDAF00', 0.1), paddingHorizontal: 6, paddingVertical: 2 }}>
-              <FontAwesome6 name="coins" size={24} color="#EDAF00" />
-              <Text style={{ color: "#EDAF00" }}>{economia.coins_balance}</Text>
-            </View>
-            <View style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 5, borderRadius: 5, backgroundColor: withOpacity('#53EAFD', 0.1), paddingHorizontal: 6, paddingVertical: 2 }}>
-              <FontAwesome6 name="diamond" size={24} color="#53EAFD" />
-              <Text style={{ color: "#53EAFD" }}>{economia.diamonds_balance}</Text>
-            </View>
+            <CurrencyBadge icon="coins" amount={economia.coins_balance} color="#EDAF00" />
+            <CurrencyBadge icon="gem" amount={economia.diamonds_balance} color="#53EAFD" />
           </View>
         )}
       </View>
@@ -123,6 +115,7 @@ export default function TiendaScreen() {
         data={allProducts}
         renderItem={({ item }) => (
           <ProductoCard
+            key={item.uuid}
             producto={item}
             isActive={item.uuid === currentVisibleId.current}
             onPress={() => handleProductPress(item)}

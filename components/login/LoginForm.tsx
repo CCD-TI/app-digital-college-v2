@@ -12,13 +12,14 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import Logo from "../Logo";
 
 const { width } = Dimensions.get("window");
 
 const style = StyleSheet.create({
   inputContainer: {
-    width: width * 0.9,
+    width: width * 0.8,
     borderWidth: 1,
     borderColor: "#fff",
     borderRadius: 10,
@@ -53,7 +54,7 @@ export function LoginForm() {
   };
 
   return (
-    <View>
+    <SafeAreaView style={{ alignItems: "center" }}>
       <View style={{ alignItems: "center", marginVertical: 70 }}>
         <Logo width={223} height={174} />
       </View>
@@ -107,12 +108,13 @@ export function LoginForm() {
           borderRadius: 25,
           alignItems: "center",
           marginTop: 20,
+          width: width * 0.5,
         }}
       >
-        <Text  style={{ color: "black", fontSize: 16, fontFamily: "Orbitron-Bold" }}>
+        <Text  style={{ color: "black", fontSize: 16, fontFamily: "Orbitron-bold"}}>
           {status === "loading" ? "Cargando..." : "Iniciar sesión"}
         </Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 }

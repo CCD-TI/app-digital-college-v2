@@ -1,13 +1,12 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
-import { AuthState, LoginResponse, ValidateResponse } from "./types";
 import {
+  fetchEconomiaApi,
+  fetchPerfilApi,
   loginApi,
   validateTokenApi,
-  fetchPerfilApi,
-  fetchEconomiaApi,
 } from "./authApi";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { EconomiaUsuario, PerfilUsuario } from "./perfil_types";
+import { AuthState } from "./types";
 
 type AuthStore = AuthState & {
   login: (credentials: { email: string; password: string }) => Promise<void>;
@@ -138,12 +137,13 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
   },
 
   setEconomia: (economia) => {
-    set({
-      economia: {
+    set((prev) => ({
+      economia: prev.economia ? {
+        ...prev.economia,
         coins_balance: economia.coinsBalance,
         diamonds_balance: economia.diamondsBalance,
-      },
-    });
+      } : null,
+    }));
   },
 
   logout: () => {

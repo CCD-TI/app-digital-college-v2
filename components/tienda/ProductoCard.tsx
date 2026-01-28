@@ -5,8 +5,8 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { styles } from "@/constants/Styles";
 import { Producto } from "@/store/auth/tienda_types";
 import { withOpacity } from "@/utils/getColorByHex";
-import { FontAwesome6 } from "@expo/vector-icons";
 import Svg, { G, Path } from "react-native-svg";
+import CurrencyBadge from "../ui/CurrencyBadge";
 
 interface ProductoCardProps {
   producto: Producto;
@@ -40,14 +40,8 @@ const ProductoCard = ({ producto, isActive, onPress }: ProductoCardProps) => {
         <View style={localStyles.textContainer}>
           <Text style={localStyles.title}>{producto.nombre}</Text>
           <View style={{ display: "flex", flexDirection: "row", gap: 10, marginTop: 5 }}>
-            <View style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 5, borderRadius: 5, backgroundColor: withOpacity('#EDAF00', 0.1), paddingHorizontal: 6, paddingVertical: 2 }}>
-              <FontAwesome6 name="coins" size={24} color="#EDAF00" />
-              <Text style={{ color: "#EDAF00" }}>{producto.monedas}</Text>
-            </View>
-            <View style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 5, borderRadius: 5, backgroundColor: withOpacity('#53EAFD', 0.1), paddingHorizontal: 6, paddingVertical: 2 }}>
-              <FontAwesome6 name="diamond" size={24} color="#53EAFD" />
-              <Text style={{ color: "#53EAFD" }}>{producto.diamantes}</Text>
-            </View>
+            <CurrencyBadge icon="coins" amount={producto.monedas} color="#EDAF00" size={20}/>
+            <CurrencyBadge icon="gem" amount={producto.diamantes} color="#53EAFD" size={20} />
           </View>
           
         </View>

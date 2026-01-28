@@ -1,12 +1,9 @@
 import ArrowRigth from "@/components/ArrowRigth";
 import CardCurso from "@/components/CardCurso";
 import MainActions from "@/components/home/MainActions";
-import ProfileAvatar from "@/components/ProfileAvatar";
-import ProgressBarExperience from "@/components/ProgressBarExperience";
+import PerfilHome from "@/components/home/PerfilHome";
 import { Colors } from "@/constants/Colors";
-import { useAuthStore } from "@/store/auth/authStore";
 import { withOpacity } from "@/utils/getColorByHex";
-import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { router } from "expo-router";
 import {
   Dimensions,
@@ -23,7 +20,7 @@ import { useCursos } from "../../../../hooks/useCursos";
 const { height: windowHeight } = Dimensions.get("window");
 
 export default function Home() {
-  const { perfil, economia } = useAuthStore();
+
   const { completados, enProgreso } = useCursos();
   const navegateTo = () => {
     router.navigate("/misCursos");
@@ -31,8 +28,7 @@ export default function Home() {
   const navegateToModulo = (id: string) => {
     router.navigate(`/curso/${id}`);
   };
-  const avatarUrl = perfil?.perfil?.productos_usados.avatar || "";
-  const marcoUrl = perfil?.perfil?.productos_usados.marco || "";
+
   return (
     <View style={[styles.absoluteFill, { backgroundColor: Colors.background }]}>
       <ScrollView
@@ -43,31 +39,8 @@ export default function Home() {
         <SafeAreaView style={styles.safeArea}>
           <StatusBar hidden={true} />
 
-          {perfil && economia && (
-            <View style={{ ...localStyles.headerContainer, justifyContent: 'space-between', gap: 10 }}>
-              <ProfileAvatar avatarUrl={avatarUrl} marcoUrl={marcoUrl} size={60} />
-              <View style={{ ...localStyles.headerTextContainer, gap: 10 }}>
-
-                <View style={localStyles.balanceContainer}>
-                  <Text style={localStyles.headerText}>{perfil.perfil.datos_usuario.nombres}</Text>
-                  <View style={{ display: "flex", flexDirection: "row", gap: 10 }} >
-                    <View style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 5, borderRadius: 5, backgroundColor: withOpacity('#EDAF00', 0.1), paddingHorizontal: 6, paddingVertical: 2 }}>
-                      <FontAwesome6 name="coins" size={24} color="#EDAF00" />
-                      <Text style={{ color: "#EDAF00" }}>{economia.coins_balance}</Text>
-                    </View>
-                    <View style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 5, borderRadius: 5, backgroundColor: withOpacity('#53EAFD', 0.1), paddingHorizontal: 6, paddingVertical: 2 }}>
-                      <FontAwesome6 name="diamond" size={24} color="#53EAFD" />
-                      <Text style={{ color: "#53EAFD" }}>{economia.diamonds_balance}</Text>
-                    </View>
-                  </View>
-                </View>
-                <ProgressBarExperience economia={economia} progress={60} color="#00C950" />
-
-              </View>
-            </View>
-          )}
-
-          <MainActions/>
+          <PerfilHome />
+          <MainActions />
           <View
             style={{
               flexDirection: "row",
@@ -206,25 +179,19 @@ export default function Home() {
               </View>
             </TouchableOpacity>
           </View>
-          {completados.length == 0 ? (
-            <></>
-          ) : (
-            <>
-              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                {completados.map((item, index) => (
-                  <CardCurso
-                    key={index}
-                    id={item.version_curso_id}
-                    name={item.curso_nombre}
-                    imageUrl={item.url_portada}
-                    colors={item.colores}
-                    grado={item.grado_nombre}
-                    nivel={item.nivel_nombre}
-                  />
-                ))}
-              </ScrollView>
-            </>
-          )}
+          {completados.length !== 0 && <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {completados.map((item, index) => (
+              <CardCurso
+                key={index}
+                id={item.version_curso_id}
+                name={item.curso_nombre}
+                imageUrl={item.url_portada}
+                colors={item.colores}
+                grado={item.grado_nombre}
+                nivel={item.nivel_nombre}
+              />
+            ))}
+          </ScrollView>}
 
           <View style={{ marginBottom: 140 }}></View>
         </SafeAreaView>
@@ -233,40 +200,7 @@ export default function Home() {
   );
 }
 
-const localStyles = StyleSheet.create({
-  headerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 6,
-    backgroundColor: withOpacity('#FFFFFF', 0.1),
-    borderRadius: 10,
-  },
-  avatar: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    marginRight: 15,
-  },
-  headerTextContainer: {
-    flex: 1
 
-  },
-  headerText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  headerSubText: {
-    color: '#FFFFFF',
-    fontSize: 14,
-  },
-  balanceContainer: {
-    flexDirection: 'row',
-    marginTop: 5,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-});
 
 const styles = StyleSheet.create({
   absoluteFill: {

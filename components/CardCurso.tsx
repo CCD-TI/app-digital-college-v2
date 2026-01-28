@@ -85,11 +85,11 @@ export default function CardCurso({ id, name, imageUrl, colors, grado, nivel }: 
                 </View>
 
                 {/* Botón Inferior */}
-                <View style={styles.footer}>
+                {/* <View style={styles.footer}>
                     <View style={[styles.btnAccion, { backgroundColor: colors.primary }]}>
                         <Text style={styles.btnText}>ABRIR CURSO</Text>
                     </View>
-                </View>
+                </View> */}
             </View>
 
         </TouchableOpacity>
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
         ...StyleSheet.absoluteFillObject,
         paddingVertical: 40,
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
     },
     header: {
         alignItems: 'center',

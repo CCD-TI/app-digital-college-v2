@@ -18,7 +18,7 @@ export default function MainActions(){
     return (
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ marginVertical:10, gap: 10 }}>
             {Actions.map((action, index) => (
-                <ActionItem key={index} title={action.title} subtitle={action.subtitle} colohex={action.colohex} route={action.route} icontext={action.icontext} />
+                <ActionItem key={index} title={action.title} subtitle={action.subtitle} colohex={action.colohex} route={action.route} icontext={action.icontext} relativewidth={0.45}/>
             ))}
         </ScrollView>
     )

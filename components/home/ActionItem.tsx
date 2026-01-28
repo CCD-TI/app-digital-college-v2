@@ -7,11 +7,12 @@ interface Action {
     colohex: string;
     route: string;
     icontext: string;
+    relativewidth?: number;
 }
-export default function ActionItem({ title, subtitle, colohex, route, icontext }: Action) {
+export default function ActionItem({ title, subtitle, colohex, route, icontext, relativewidth = 0.4 }: Action) {
     const viewBox = "0 0 318 183";
     const { width } = Dimensions.get('window');
-    const cardWidth = width * 0.4; // Ajusta el ancho deseado
+    const cardWidth = width * relativewidth; // Ajusta el ancho deseado
     const cardHeight = (183 / 318) * cardWidth; // Mantiene el aspect ratio
     return (
         <TouchableOpacity activeOpacity={0.9} style={{ alignSelf: 'center', width: cardWidth, height: cardHeight }}>
@@ -55,8 +56,13 @@ export default function ActionItem({ title, subtitle, colohex, route, icontext }
                 justifyContent: 'center',
             }}>
                 <FontAwesome name={icontext as any} size={24} color={colohex} />
-                <Text style={{ color: colohex, fontSize:20, fontFamily: 'Orbitron' }}>{title}</Text>
+                <Text style={[styles.text, { color: colohex }]}>{title}</Text>
             </View>
         </TouchableOpacity>
     )
 }
+const styles = StyleSheet.create({
+    text: {
+        fontSize:16, fontFamily: 'Orbitron-bold'
+    },
+});
