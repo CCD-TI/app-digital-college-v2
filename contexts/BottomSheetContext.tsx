@@ -1,9 +1,9 @@
 // BottomSheetContext.tsx
-import React, { createContext, useContext, useRef, ReactNode } from "react";
 import BottomSheetMethods from "@gorhom/bottom-sheet";
+import React, { createContext, ReactNode, useContext, useRef } from "react";
 
 interface BottomSheetContextType {
-  bottomSheetRef: React.RefObject<BottomSheetMethods>;
+  bottomSheetRef: React.RefObject<BottomSheetMethods | null>;
 }
 
 const BottomSheetContext = createContext<BottomSheetContextType | null>(null);

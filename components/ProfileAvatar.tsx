@@ -1,17 +1,18 @@
 import { Image } from 'expo-image';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 interface ProfileAvatarProps {
   avatarUrl?: string;
   marcoUrl?: string;
   size?: number; // Size of the avatar, frame will adjust
+  style?: StyleProp<ViewStyle> | undefined;
 }
 
-const ProfileAvatar = ({ avatarUrl, marcoUrl, size = 60 }: ProfileAvatarProps) => {
+const ProfileAvatar = ({ avatarUrl, marcoUrl, size = 60, style }: ProfileAvatarProps) => {
   const frameSize = size + 10; // Frame slightly larger than avatar
 
   return (
-    <View style={{ width: frameSize, height: frameSize, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={[{ width: frameSize, height: frameSize, justifyContent: 'center', alignItems: 'center' }, style]}>
       {/* Avatar Image */}
       {avatarUrl && (
         <Image

@@ -1,3 +1,4 @@
+import { formatCompactNumber } from "@/utils/formatNumber";
 import { withOpacity } from "@/utils/getColorByHex";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { StyleSheet, Text, View } from "react-native";
@@ -20,7 +21,7 @@ export default function CurrencyBadge({
         ]}>
             <FontAwesome5 name={icon} size={size} color={color} solid />
             <Text style={[styles.badgeText, { color, fontSize: size * 0.9 }]}>
-                {amount.toLocaleString()}
+                {formatCompactNumber(amount)}
             </Text>
         </View>
     );
